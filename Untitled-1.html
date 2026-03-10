@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en" class="h-full">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>eklavya - Ability Over Vision</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&amp;family=Poppins:wght@400;600;700&amp;family=Raleway:wght@400;600;700&amp;family=Montserrat:wght@400;600;700&amp;family=Comfortaa:wght@400;600;700&amp;family=Pacifico&amp;display=swap" rel="stylesheet">
+   <style>
+       body {
+           box-sizing: border-box;
+       }
+       .font-display { font-family: 'Pacifico', cursive; }
+       .font-body { font-family: 'Poppins', sans-serif; }
+       .font-satisfy { font-family: 'Quicksand', sans-serif; }
+       .font-kaushan { font-family: 'Raleway', sans-serif; }
+       .font-caveat { font-family: 'Montserrat', sans-serif; }
+
+       :root {
+           --primary: #000000;
+           --primary-dark: #1a1a1a;
+           --secondary: #FFC107;
+           --secondary-dark: #FFA000;
+           --accent: #FFD54F;
+           --bg-light: #FFFBEA;
+           --bg-card: #FFFFFF;
+           --text-dark: #000000;
+           --text-medium: #333333;
+           --text-light: #666666;
+           --border: #FFE082;
+       }
+
+       /* --- NEW PREMIUM ANIMATIONS --- */
+       
+       /* 1. Live Gradient Background */
+       @keyframes gradientBG {
+           0% { background-position: 0% 50%; }
+           50% { background-position: 100% 50%; }
+           100% { background-position: 0% 50%; }
+       }
+       .live-bg {
+           background: linear-gradient(-45deg, #f5eda3, #F5C527, #4c4b48, #2a2a2a);
+           background-size: 400% 400%;
+           animation: gradientBG 12s ease infinite;
+       }
+
+       /* 2. Glassmorphism */
+       .glass-effect {
+           background: rgba(255, 255, 255, 0.90);
+           backdrop-filter: blur(16px);
+           -webkit-backdrop-filter: blur(16px);
+           border: 1px solid rgba(255, 255, 255, 0.4);
+       }
+
+       /* 3. Cinematic Blur Reveal */
+       @keyframes fadeSlideUp {
+           0% { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
+           100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); }
+       }
+       .animate-fade-in {
+           animation: fadeSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+       }
+       .animate-stagger {
+           opacity: 0;
+           animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+       }
+
+       /* 4. Floating Elements */
+       @keyframes floatCard {
+           0% { transform: translateY(0px); }
+           50% { transform: translateY(-8px); }
+           100% { transform: translateY(0px); }
+       }
+       .floating-card {
+           animation: floatCard 6s ease-in-out infinite;
+       }
+
+       /* 5. Button Ripple & Squish */
+       button {
+           position: relative;
+           overflow: hidden;
+           transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease !important;
+       }
+       button:active {
+           transform: scale(0.94) !important;
+       }
+       .ripple-effect {
+           position: absolute;
+           border-radius: 50%;
+           background: rgba(255, 255, 255, 0.6);
+           transform: scale(0);
+           animation: rippleAnim 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+           pointer-events: none;
+       }
+       @keyframes rippleAnim {
+           to { transform: scale(4); opacity: 0; }
+       }
+
+       /* 6. Pulsing Button Effect */
+       @keyframes softPulse {
+           0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.5); }
+           70% { box-shadow: 0 0 0 12px rgba(5, 150, 105, 0); }
+           100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+       }
+       .btn-pulse { animation: softPulse 2s infinite; }
+
+       /* --- EXISTING CSS --- */
+       .login-card { background: var(--bg-card); border: 1px solid var(--border); }
+       
+       .btn-primary { background: var(--primary); transition: all 0.3s ease; }
+       .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); }
+       
+       .btn-secondary { background: var(--secondary); transition: all 0.3s ease; }
+       .btn-secondary:hover { background: var(--secondary-dark); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(255, 193, 7, 0.35); }
+       
+       .input-field { transition: all 0.3s ease; background: var(--bg-light); border: 2px solid transparent; }
+       .input-field:focus { border-color: var(--secondary); background: var(--bg-card); box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15); transform: translateY(-1px); }
+       
+       .card-shadow { box-shadow: 0 6px 20px rgba(42, 63, 77, 0.08); }
+       .header-shadow { box-shadow: 0 2px 10px rgba(42, 63, 77, 0.1); }
+       
+       .btn-accent { background: var(--accent); transition: all 0.3s ease; }
+       .btn-accent:hover { background: #D4A43E; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(232, 184, 77, 0.3); }
+       
+       @view-transition { navigation: auto; }
+   </style>
+</head>
+
+<body class="h-full font-body overflow-auto">
+   <div id="app" class="w-full h-full">
+       
+       <div id="login-page" class="w-full h-full flex items-center justify-center p-6 live-bg">
+           <div class="max-w-md w-full animate-fade-in" id="login-container">
+               <div class="text-center mb-10 floating-card">
+                   <img src="logo.png" alt="Eklavya Logo" class="mx-auto mb-4" style="width: 220px; height: auto;">
+                   <h1 id="login-title" class="font-display text-6xl font-black mb-3" style="color: #000000; text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5); letter-spacing: 2px; font-style: italic;">eklavya</h1>
+                   <p id="login-tagline" class="font-kaushan text-xl tracking-wide font-bold" style="color: #222;">Ability Over Vision</p>
+               </div>
+               
+               <div class="glass-effect rounded-2xl card-shadow p-8 mb-6 floating-card" style="animation-delay: 0.2s;">
+                   <h2 class="font-satisfy text-3xl font-bold mb-6 text-center" style="color: #000000;">Sign In</h2>
+                   <div class="flex gap-3 mb-6">
+                       <button onclick="selectRole('teacher')" id="role-teacher" class="flex-1 py-3 px-4 rounded-lg font-caveat text-xl font-bold border-2 transition-all shadow-md" style="border-color: #000000; background: #000000; color: #FFFFFF;"> Teacher </button>
+                       <button onclick="selectRole('student')" id="role-student" class="flex-1 py-3 px-4 rounded-lg font-caveat text-xl font-bold border-2 bg-white transition-all shadow-sm" style="border-color: #FFE082; color: #333333;"> Student </button>
+                   </div>
+                   <form onsubmit="handleLogin(event)" class="space-y-4">
+                       <div><label for="login-id" class="block font-caveat text-lg font-bold mb-1.5" style="color: #000000;">User ID</label> <input type="text" id="login-id" placeholder="Enter your ID" class="input-field w-full px-3.5 py-2.5 rounded-lg focus:outline-none font-body" required></div>
+                       <div><label for="login-password" class="block font-caveat text-lg font-bold mb-1.5" style="color: #000000;">Password</label> <input type="password" id="login-password" placeholder="Enter your password" class="input-field w-full px-3.5 py-2.5 rounded-lg focus:outline-none font-body" required></div>
+                       <div id="login-error" class="hidden font-body text-sm font-medium p-3 rounded-lg" style="color: #B91C1C; background: #FEF2F2; border: 1px solid #FECACA;"></div>
+                       <button type="submit" id="login-btn" class="w-full text-white font-caveat text-2xl font-bold py-3.5 px-6 rounded-lg btn-primary shadow-lg"> Sign In as Teacher </button>
+                   </form>
+               </div>
+               
+               <div class="text-center font-body text-sm space-y-2" style="color: #222;">
+                   <p class="bg-white bg-opacity-50 inline-block px-4 py-1 rounded-full backdrop-blur-sm"><strong>Teacher:</strong> ID: <code class="px-1 text-black">teacher</code> | Password: <code class="px-1 text-black">1234</code></p><br>
+                   <p class="bg-white bg-opacity-50 inline-block px-4 py-1 rounded-full backdrop-blur-sm mt-1"><strong>Student:</strong> Any ID | Password: <code class="px-1 text-black">0987</code></p>
+               </div>
+           </div>
+       </div>
+
+       <div id="teacher-portal" class="hidden w-full h-full flex flex-col" style="background: #FFFFFF;">
+           <header class="header-shadow py-4 px-6 z-10" style="background: linear-gradient(90deg, #373636 0%, #1a1a1a 100%); border-bottom: 2px solid #F5C527;">
+               <div class="max-w-6xl mx-auto flex items-center justify-between">
+                   <div>
+                       <h1 class="font-display text-3xl font-bold text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">eklavya</h1>
+                       <p class="font-caveat text-base" style="color: #FFD54F;">Teacher Dashboard</p>
+                   </div>
+                   <button onclick="logout()" class="px-6 py-2 rounded-lg font-caveat text-lg font-bold transition-all border-2 shadow-md hover:shadow-lg" style="background: #FFC107; color: #000000; border-color: #FFC107;"> Sign Out </button>
+               </div>
+           </header>
+           
+           <main class="flex-1 overflow-auto p-6" style="background: #FFFBEA;">
+               <div class="max-w-5xl mx-auto" id="teacher-main-content">
+                   <div class="mb-6 border-b-2 border-yellow-200">
+                       <nav class="flex gap-1">
+                           <button id="tab-create" onclick="switchTab('create')" class="px-6 py-3 font-satisfy text-xl font-bold transition-all" style="color: #000000; border-bottom: 3px solid #FFC107; margin-bottom: -2px;"> Add Questions </button>
+                           <button id="tab-responses" onclick="switchTab('responses')" class="px-6 py-3 font-satisfy text-xl font-bold text-gray-500 hover:text-black transition-all"> Check Responses </button>
+                       </nav>
+                   </div>
+                   
+                   <div id="create-tab">
+                       <div class="rounded-xl card-shadow p-6 mb-6 bg-white border border-yellow-200 hover:shadow-xl transition-shadow">
+                           <h3 class="font-kaushan text-2xl mb-5" style="color: #000000;">Add New Question</h3>
+                           <div class="space-y-4">
+                               <div>
+                                   <label class="block font-caveat text-lg font-bold mb-2" style="color: #000000;">Question Type</label>
+                                   <div class="flex gap-4">
+                                       <label class="flex items-center gap-2 cursor-pointer bg-yellow-50 px-3 py-2 rounded-lg border border-yellow-100">
+                                           <input type="radio" name="question-type" value="short" checked class="w-4 h-4" style="accent-color: #FFC107;"> 
+                                           <span class="font-body text-base font-medium" style="color: #333333;">Short Answer (5 marks)</span> 
+                                       </label> 
+                                       <label class="flex items-center gap-2 cursor-pointer bg-yellow-50 px-3 py-2 rounded-lg border border-yellow-100"> 
+                                           <input type="radio" name="question-type" value="long" class="w-4 h-4" style="accent-color: #FFC107;"> 
+                                           <span class="font-body text-base font-medium" style="color: #333333;">Long Answer (10 marks)</span> 
+                                       </label>
+                                   </div>
+                               </div>
+                               <div><label for="question-text" class="block font-caveat text-lg font-bold mb-1.5" style="color: #000000;">Question</label> <textarea id="question-text" rows="3" placeholder="Enter your question here..." class="w-full px-4 py-3 rounded-lg focus:outline-none resize-none input-field font-body shadow-inner"></textarea></div>
+                               <div><label for="answer-text" class="block font-caveat text-lg font-bold mb-1.5" style="color: #000000;">Answer</label> <textarea id="answer-text" rows="4" placeholder="Enter the answer for this question..." class="w-full px-4 py-3 rounded-lg focus:outline-none resize-none input-field font-body shadow-inner"></textarea></div>
+                               <button onclick="addQuestion()" class="btn-primary text-white font-caveat text-xl font-bold py-3 px-8 rounded-lg shadow-md mt-2"> Add Question </button>
+                           </div>
+                       </div>
+                       
+                       <div class="rounded-xl card-shadow p-6 bg-white border border-yellow-200">
+                           <div class="flex items-center justify-between mb-5 border-b pb-3">
+                               <h3 class="font-kaushan text-2xl" style="color: #000000;">Questions (<span id="question-count">0</span>)</h3>
+                               <div class="flex gap-3">
+                                   <button onclick="autoAddFiveQuestions()" class="text-white font-caveat text-lg font-bold py-3 px-5 rounded-lg shadow-md btn-pulse" style="background: #059669;"> ✨ Auto-Generate 5 Q's </button>
+                                   <button onclick="publishTest()" id="publish-btn" class="btn-accent text-black font-caveat text-xl font-bold py-3 px-6 rounded-lg disabled:opacity-50 shadow-md" disabled style="background: #FFC107;"> Publish Test </button>
+                               </div>
+                           </div>
+                           <div id="questions-list" class="space-y-4">
+                               <p class="text-center py-12 font-body text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed">No questions added yet. Add your first question above.</p>
+                           </div>
+                           <div id="published-notice" class="hidden mt-6 rounded-lg p-4 shadow-inner" style="background: #FFF9C4; border: 2px solid #FFC107;">
+                               <p class="font-caveat text-xl font-bold text-center" style="color: #b45309;">✨ Test is published and visible to students ✨</p>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div id="responses-tab" class="hidden">
+                       <div class="rounded-xl card-shadow p-6 bg-white border border-yellow-200">
+                           <h3 class="font-kaushan text-2xl mb-5 border-b pb-3" style="color: #000000;">Student Responses</h3>
+                           <div id="responses-list" class="space-y-4">
+                               <p class="text-center py-12 font-body text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed">No responses submitted yet.</p>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </main>
+       </div>
+
+       <div id="student-portal" class="hidden w-full h-full flex flex-col" style="background: #FFFFFF;">
+           <header class="header-shadow py-4 px-6 z-10" style="background: linear-gradient(90deg, #FFC107 0%, #FFD54F 100%); border-bottom: 2px solid #eab308;">
+               <div class="max-w-6xl mx-auto flex items-center justify-between">
+                   <div>
+                       <h1 class="font-display text-3xl font-black text-black" style="text-shadow: 1px 1px 3px rgba(255,255,255,0.4);">eklavya</h1>
+                       <p class="font-caveat text-lg font-bold text-gray-800">Student Portal</p>
+                   </div>
+                   <button onclick="logout()" class="px-6 py-2.5 rounded-lg font-caveat text-xl font-bold transition-all shadow-lg" style="background: #000000; color: #FFFFFF;"> Exit </button>
+               </div>
+           </header>
+           
+           <main class="flex-1 overflow-auto p-6" style="background: #EFF6FF;">
+               <div class="max-w-4xl mx-auto" id="student-main-content">
+                   
+                   <div id="no-test" class="hidden rounded-2xl card-shadow p-16 text-center floating-card mt-10" style="background: #FFFFFF; border: 2px solid #BFDBFE;">
+                       <div class="text-6xl mb-4">📚</div>
+                       <h3 class="font-kaushan text-3xl mb-3 text-blue-600 font-bold">No Test Available</h3>
+                       <p class="font-body text-gray-500 text-lg">Please wait for your teacher to publish a test.</p>
+                   </div>
+                   
+                   <div id="test-interface" class="hidden">
+                       <div class="rounded-xl card-shadow p-5 mb-6 bg-white border border-blue-200">
+                           <div class="flex items-center justify-between mb-3">
+                               <span class="font-caveat text-xl font-bold" style="color: #475569;">Progress</span> 
+                               <span id="progress-text" class="font-satisfy text-xl font-bold bg-blue-50 px-3 py-1 rounded-md" style="color: #2563EB;">Question 1 of 5</span>
+                           </div>
+                           <div class="w-full h-4 rounded-full overflow-hidden shadow-inner" style="background: #DBEAFE;">
+                               <div id="progress-bar" class="h-full transition-all duration-500 ease-out" style="width: 20%; background: linear-gradient(90deg, #2563EB 0%, #3B82F6 100%);"></div>
+                           </div>
+                       </div>
+                       
+                       <div class="rounded-xl card-shadow p-8 mb-6 bg-white border border-blue-200 hover:shadow-xl transition-shadow">
+                           <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                               <span id="q-type-badge" class="px-4 py-2 font-caveat text-lg font-bold rounded-lg bg-blue-50 text-blue-700 border border-blue-100">Short Answer</span> 
+                               <span id="q-marks-badge" class="px-4 py-2 font-caveat text-lg font-bold rounded-lg bg-blue-50 text-blue-700 border border-blue-100">5 Marks</span>
+                           </div>
+                           <h3 id="current-question" class="font-body text-2xl mb-6 font-bold text-gray-800 leading-relaxed">Loading question...</h3>
+                           <div>
+                               <label for="student-answer" class="block font-caveat text-xl font-bold mb-3 text-gray-700">Your Answer</label> 
+                               <textarea id="student-answer" rows="8" placeholder="Type your answer here..." class="w-full px-5 py-4 rounded-xl focus:outline-none resize-none input-field font-body text-lg shadow-inner bg-gray-50 border-2"></textarea>
+                           </div>
+                           <div class="mt-5 flex flex-wrap gap-4">
+                               <button onclick="readAnswer()" class="flex-1 font-caveat text-xl font-bold py-4 px-6 rounded-xl shadow-md transition-all" style="background: #475569; color: #FFFFFF;"> 🔊 Read My Answer </button>
+                               <button id="autocorrect-btn" onclick="toggleAutocorrect()" class="flex-1 font-caveat text-xl font-bold py-4 px-6 rounded-xl shadow-md transition-all" style="background: #059669; color: #FFFFFF;"> ✨ Autocorrect: ON </button>
+                           </div>
+                       </div>
+                       
+                       <div class="flex items-center justify-between mb-8">
+                           <button onclick="navigateQuestion(-1)" id="prev-btn" class="px-8 py-4 rounded-xl card-shadow font-caveat text-xl font-bold disabled:opacity-40 transition-all" style="background: #FFFFFF; color: #6B4C7A; border: 2px solid #e2e8f0;" disabled> ← Previous </button> 
+                           <button onclick="submitTest()" class="btn-primary text-black font-caveat text-3xl font-bold py-4 px-12 rounded-xl shadow-xl btn-pulse" style="background: #F5C527;"> Submit Test </button>
+                           <button onclick="navigateQuestion(1)" id="next-btn" class="px-8 py-4 rounded-xl card-shadow font-caveat text-xl font-bold transition-all" style="background: #FFFFFF; color: #6B4C7A; border: 2px solid #e2e8f0;"> Next → </button>
+                       </div>
+                   </div>
+                   
+                   <div id="test-submitted" class="hidden rounded-2xl card-shadow p-16 text-center floating-card mt-10" style="background: #FFFFFF; border: 4px solid #10B981;">
+                       <div class="text-7xl mb-4">🎉</div>
+                       <h3 class="font-kaushan text-5xl mb-4 font-bold text-green-600">Test Submitted!</h3>
+                       <p class="font-body text-xl font-bold text-gray-500">Your answers have been submitted successfully. Great job!</p>
+                   </div>
+               </div>
+           </main>
+       </div>
+
+       <div id="eligibility-popup" class="hidden fixed inset-0 flex items-center justify-center z-50 p-4 backdrop-blur-md" style="background: rgba(0,0,0, 0.6);">
+           <div class="rounded-2xl card-shadow max-w-md w-full p-10 text-center bg-white animate-fade-in border-4 border-yellow-400">
+               <div id="popup-icon" class="w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center bg-yellow-100">
+                   <svg class="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+               </div>
+               <h3 id="popup-title" class="font-kaushan text-4xl mb-4 font-bold text-black">Great!</h3>
+               <p id="popup-message" class="mb-8 font-body text-lg text-gray-600 font-bold">Your answer is eligible for submission.</p>
+               <button onclick="closePopup()" class="text-black font-caveat text-2xl font-bold py-3 px-10 rounded-xl shadow-lg w-full" style="background: #F5C527;"> Continue </button>
+           </div>
+       </div>
+
+       <div id="response-modal" class="hidden fixed inset-0 flex items-center justify-center z-50 p-4 overflow-auto backdrop-blur-md" style="background: rgba(0,0,0, 0.7);">
+           <div class="rounded-2xl card-shadow max-w-4xl w-full max-h-[90%] overflow-auto bg-white animate-fade-in">
+               <div class="sticky top-0 p-6 flex items-center justify-between bg-white border-b-2 border-gray-100 z-10">
+                   <h3 class="font-kaushan text-3xl font-bold text-black">Review Student Response</h3>
+                   <button onclick="closeModal()" class="p-3 rounded-xl transition-all bg-red-50 hover:bg-red-100 text-red-600">
+                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" /></svg>
+                   </button>
+               </div>
+               <div id="modal-content" class="p-8 bg-gray-50"></div>
+           </div>
+       </div>
+   </div>
+
+   <script>
+       // --- GLOBAL BUTTON RIPPLE EFFECT ---
+       document.addEventListener('mousedown', function (e) {
+           const btn = e.target.closest('button');
+           if (btn) {
+               const rect = btn.getBoundingClientRect();
+               const ripple = document.createElement('span');
+               const size = Math.max(rect.width, rect.height);
+               ripple.style.width = ripple.style.height = size + 'px';
+               ripple.style.left = (e.clientX - rect.left) - size / 2 + 'px';
+               ripple.style.top = (e.clientY - rect.top) - size / 2 + 'px';
+               ripple.classList.add('ripple-effect');
+               if (btn.classList.contains('bg-white') || btn.style.background === 'rgb(255, 255, 255)' || btn.style.background === '#FFFFFF') {
+                   ripple.style.background = 'rgba(0, 0, 0, 0.15)';
+               }
+               btn.appendChild(ripple);
+               setTimeout(() => ripple.remove(), 600);
+           }
+       });
+
+       // --- CINEMATIC REVEAL TRIGGER ---
+       function triggerCinematicReveal(elementId) {
+           const el = document.getElementById(elementId);
+           if(el) {
+               el.classList.remove('animate-fade-in');
+               void el.offsetWidth; // Force DOM reflow
+               el.classList.add('animate-fade-in');
+           }
+       }
+
+       // --- BEGIN MOCK BACKEND (Replaces Canva SDKs) ---
+       window.elementSdk = { init: function (config) { if (config.onConfigChange) config.onConfigChange(config.defaultConfig); } };
+
+       window.dataSdk = (function () {
+           let handler = null;
+           function getData() { return JSON.parse(localStorage.getItem('prabodh_database') || '[]'); }
+           function saveData(data) {
+               localStorage.setItem('prabodh_database', JSON.stringify(data));
+               if (handler && handler.onDataChanged) handler.onDataChanged(data);
+           }
+           return {
+               init: async function (h) { handler = h; if (handler && handler.onDataChanged) handler.onDataChanged(getData()); return { isOk: true }; },
+               create: async function (item) { const data = getData(); item.__backendId = 'id_' + Date.now() + Math.random().toString(36).substr(2, 9); data.push(item); saveData(data); return { isOk: true }; },
+               update: async function (item) { const data = getData(); const index = data.findIndex(d => d.__backendId === item.__backendId); if (index !== -1) { data[index] = item; saveData(data); return { isOk: true }; } return { isOk: false }; },
+               delete: async function (item) { let data = getData(); data = data.filter(d => d.__backendId !== item.__backendId); saveData(data); return { isOk: true }; }
+           };
+       })();
+
+       // State
+       let currentUser = null; let selectedRole = 'teacher'; let allData = []; let currentQuestionIndex = 0; let testQuestions = []; let studentAnswers = {}; let autocorrectEnabled = true;
+
+       const defaultConfig = { platform_title: 'eklavya', tagline: 'Ability Over Vision' };
+       let config = { ...defaultConfig };
+
+       function applyConfig() {
+           const titleEl = document.getElementById('login-title'), taglineEl = document.getElementById('login-tagline');
+           if (titleEl) titleEl.textContent = config.platform_title || defaultConfig.platform_title;
+           if (taglineEl) taglineEl.textContent = config.tagline || defaultConfig.tagline;
+       }
+
+       const dataHandler = { onDataChanged(data) { allData = data; updateUI(); } };
+       async function initDataSdk() { if (window.dataSdk) { const result = await window.dataSdk.init(dataHandler); if (!result.isOk) console.error('Failed to init'); } }
+       initDataSdk();
+
+       function updateUI() { if (currentUser === 'teacher') { renderQuestions(); renderResponses(); } else if (currentUser === 'student') loadTest(); }
+
+       // Login Functions
+       function selectRole(role) {
+           selectedRole = role;
+           const teacherBtn = document.getElementById('role-teacher'), studentBtn = document.getElementById('role-student'), loginBtn = document.getElementById('login-btn');
+           if (role === 'teacher') {
+               teacherBtn.style.background = '#000000'; teacherBtn.style.color = '#FFFFFF'; teacherBtn.classList.replace('shadow-sm', 'shadow-md');
+               studentBtn.style.background = '#FFFFFF'; studentBtn.style.color = '#333333'; studentBtn.classList.replace('shadow-md', 'shadow-sm');
+               loginBtn.textContent = 'Sign In as Teacher';
+           } else {
+               studentBtn.style.background = '#000000'; studentBtn.style.color = '#FFFFFF'; studentBtn.classList.replace('shadow-sm', 'shadow-md');
+               teacherBtn.style.background = '#FFFFFF'; teacherBtn.style.color = '#333333'; teacherBtn.classList.replace('shadow-md', 'shadow-sm');
+               loginBtn.textContent = 'Sign In as Student';
+           }
+       }
+
+       function handleLogin(event) {
+           event.preventDefault();
+           const userId = document.getElementById('login-id').value.trim(), password = document.getElementById('login-password').value.trim(), errorDiv = document.getElementById('login-error');
+           errorDiv.classList.add('hidden');
+
+           if (selectedRole === 'teacher') {
+               if (userId === 'teacher' && password === '1234') {
+                   currentUser = 'teacher';
+                   document.getElementById('login-page').classList.add('hidden');
+                   document.getElementById('teacher-portal').classList.remove('hidden');
+                   triggerCinematicReveal('teacher-main-content');
+                   renderQuestions();
+               } else { errorDiv.textContent = 'Invalid credentials. Use ID: teacher, Password: 1234'; errorDiv.classList.remove('hidden'); }
+           } else {
+               if (password === '0987') {
+                   currentUser = userId;
+                   document.getElementById('login-page').classList.add('hidden');
+                   document.getElementById('student-portal').classList.remove('hidden');
+                   triggerCinematicReveal('student-main-content');
+                   loadTest();
+               } else { errorDiv.textContent = 'Invalid password. Use Password: 0987'; errorDiv.classList.remove('hidden'); }
+           }
+       }
+
+       function logout() {
+           currentUser = null; currentQuestionIndex = 0; studentAnswers = {};
+           document.getElementById('teacher-portal').classList.add('hidden');
+           document.getElementById('student-portal').classList.add('hidden');
+           document.getElementById('login-page').classList.remove('hidden');
+           document.getElementById('login-id').value = ''; document.getElementById('login-password').value = ''; document.getElementById('login-error').classList.add('hidden');
+           document.getElementById('test-interface').classList.add('hidden'); document.getElementById('test-submitted').classList.add('hidden'); document.getElementById('no-test').classList.add('hidden');
+           triggerCinematicReveal('login-container');
+       }
+
+       // Teacher Functions
+       function switchTab(tab) {
+           const createTab = document.getElementById('create-tab'), responsesTab = document.getElementById('responses-tab'), createBtn = document.getElementById('tab-create'), responsesBtn = document.getElementById('tab-responses');
+           if (tab === 'create') {
+               createTab.classList.remove('hidden'); responsesTab.classList.add('hidden');
+               createBtn.style.color = '#000000'; createBtn.style.borderBottom = '3px solid #FFC107';
+               responsesBtn.style.color = '#6b7280'; responsesBtn.style.borderBottom = 'none';
+               triggerCinematicReveal('create-tab');
+           } else {
+               createTab.classList.add('hidden'); responsesTab.classList.remove('hidden');
+               responsesBtn.style.color = '#000000'; responsesBtn.style.borderBottom = '3px solid #FFC107';
+               createBtn.style.color = '#6b7280'; createBtn.style.borderBottom = 'none';
+               triggerCinematicReveal('responses-tab');
+               renderResponses();
+           }
+       }
+
+       async function addQuestion() {
+           const questionText = document.getElementById('question-text').value.trim(), answerText = document.getElementById('answer-text').value.trim(), questionType = document.querySelector('input[name="question-type"]:checked').value;
+           if (!questionText || !answerText) return showToast('Please fill in both question and answer', 'error');
+           if (allData.filter(d => d.type === 'question').length >= 999) return showToast('Maximum questions limit reached', 'error');
+
+           await window.dataSdk.create({ type: 'question', question_id: 'q_' + Date.now(), question_text: questionText, question_type: questionType, answer: answerText, test_published: false, student_answer: null, student_name: null, is_checked: false, marks: null, submitted_at: null, created_at: new Date().toISOString() });
+           document.getElementById('question-text').value = ''; document.getElementById('answer-text').value = ''; showToast('Question added successfully!', 'success');
+       }
+
+       function renderQuestions() {
+           const questions = allData.filter(d => d.type === 'question');
+           document.getElementById('question-count').textContent = questions.length;
+           const publishBtn = document.getElementById('publish-btn');
+           publishBtn.disabled = questions.length === 0;
+
+           if (questions.some(q => q.test_published)) {
+               document.getElementById('published-notice').classList.remove('hidden'); publishBtn.disabled = true; publishBtn.textContent = '✓ Published';
+           } else {
+               document.getElementById('published-notice').classList.add('hidden'); publishBtn.textContent = 'Publish Test';
+           }
+
+           const container = document.getElementById('questions-list');
+           if (questions.length === 0) { container.innerHTML = '<p class="text-center py-12 font-body text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed">No questions added yet. Add your first question above.</p>'; return; }
+
+           // Staggered Animation added to the cards here
+           container.innerHTML = questions.map((q, i) => `
+               <div class="border-2 rounded-xl p-5 hover:border-yellow-400 transition-all bg-white animate-stagger shadow-sm hover:shadow-md" style="border-color: #E5E7EB; animation-delay: ${i * 0.08}s;">
+                 <div class="flex items-start justify-between gap-4">
+                   <div class="flex-1">
+                     <div class="flex items-center gap-3 mb-3">
+                       <span class="font-black text-lg bg-black text-white px-3 py-1 rounded-lg">Q${i + 1}</span>
+                       <span class="px-3 py-1 font-bold text-sm rounded-lg" style="${q.question_type === 'short' ? 'background: #fef9c3; color: #b45309;' : 'background: #e0f2fe; color: #0369a1;'}">${q.question_type === 'short' ? 'Short (5 marks)' : 'Long (10 marks)'}</span>
+                     </div>
+                     <p class="font-bold text-xl mb-3 text-gray-800">${escapeHtml(q.question_text)}</p>
+                     <div class="bg-gray-50 p-4 rounded-xl"><p class="text-sm text-gray-600"><strong class="text-black text-md">Expected Answer:</strong><br>${escapeHtml(q.answer)}</p></div>
+                   </div>
+                   <button onclick="deleteQuestion('${q.__backendId}')" class="p-2 rounded-lg bg-red-50 hover:bg-red-500 hover:text-white transition-all text-red-500 shadow-sm"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+                 </div>
+               </div>
+             `).join('');
+       }
+
+       async function deleteQuestion(backendId) {
+           const question = allData.find(d => d.__backendId === backendId);
+           if (question) { await window.dataSdk.delete(question); showToast('Question deleted', 'success'); }
+       }
+
+       async function publishTest() {
+           for (const q of allData.filter(d => d.type === 'question')) { await window.dataSdk.update({ ...q, test_published: true }); }
+           showToast('Test published successfully!', 'success');
+       }
+
+       function renderResponses() {
+           const responses = allData.filter(d => d.type === 'response');
+           const container = document.getElementById('responses-list');
+           if (responses.length === 0) { container.innerHTML = '<p class="text-center py-12 font-body text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed">No responses submitted yet.</p>'; return; }
+
+           const studentGroups = {};
+           responses.forEach(r => { if (!studentGroups[r.student_name]) studentGroups[r.student_name] = []; studentGroups[r.student_name].push(r); });
+
+           // Staggered Animation added here
+           container.innerHTML = Object.entries(studentGroups).map(([name, resps], i) => {
+               const allChecked = resps.every(r => r.is_checked), totalMarks = resps.reduce((sum, r) => sum + (r.marks || 0), 0);
+               const maxMarks = resps.reduce((sum, r) => { const q = allData.find(d => d.type === 'question' && d.question_id === r.question_id); return sum + (q?.question_type === 'short' ? 5 : 10); }, 0);
+               return `
+                 <div class="border-2 rounded-xl p-6 transition-all animate-stagger shadow-sm hover:shadow-md mb-4" style="${allChecked ? 'border-color: #059669; background: #ecfdf5;' : 'border-color: #E5E7EB; background: #FFFFFF;'} animation-delay: ${i * 0.1}s;">
+                   <div class="flex items-center justify-between">
+                     <div>
+                       <h4 class="font-bold text-2xl mb-1" style="color: #2A3F4D;">${escapeHtml(name)}</h4>
+                       <p class="text-lg font-bold" style="color: #6b7280;">${resps.length} answers  •  ${allChecked ? `<span class="text-green-600">Score: ${totalMarks}/${maxMarks}</span>` : '<span class="text-yellow-600">Pending Review</span>'}</p>
+                     </div>
+                     <button onclick="openResponseModal('${name}')" class="text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all hover:-translate-y-1" style="background: ${allChecked ? '#1f2937' : '#F5C527'}; color: ${allChecked ? '#FFF' : '#000'}">${allChecked ? 'View Grading' : 'Grade Test'}</button>
+                   </div>
+                 </div>`;
+           }).join('');
+       }
+
+       function openResponseModal(studentName) {
+           const responses = allData.filter(d => d.type === 'response' && d.student_name === studentName);
+           const modal = document.getElementById('response-modal');
+           const content = document.getElementById('modal-content');
+
+           content.innerHTML = `<div class="space-y-6">` + responses.map((r, i) => {
+               const question = allData.find(d => d.type === 'question' && d.question_id === r.question_id);
+               const maxMarks = question?.question_type === 'short' ? 5 : 10;
+               return `
+                 <div class="border-2 rounded-xl p-6 bg-white shadow-sm border-gray-200">
+                   <div class="flex items-center gap-3 mb-4 border-b pb-3">
+                     <span class="font-black text-xl bg-black text-white px-3 py-1 rounded-lg">Q${i + 1}</span>
+                     <span class="px-3 py-1 font-bold text-sm rounded-lg bg-yellow-100 text-yellow-800">${maxMarks} marks</span>
+                     ${r.is_checked ? '<span class="px-3 py-1 font-bold text-sm rounded-lg bg-green-100 text-green-800">✓ Graded</span>' : ''}
+                   </div>
+                   <p class="font-bold text-xl mb-4 text-gray-800 leading-snug">${escapeHtml(question?.question_text || 'Question not found')}</p>
+                   <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4"><p class="text-sm text-gray-500 font-bold mb-1">Expected Answer:</p><p class="text-lg text-gray-700">${escapeHtml(question?.answer || '')}</p></div>
+                   <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-5"><p class="text-sm text-blue-600 font-bold mb-1">Student Typed:</p><p class="text-xl font-bold text-black">${escapeHtml(r.student_answer)}</p></div>
+                   <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                     <label class="font-bold text-xl text-gray-700">Award Marks:</label>
+                     <input type="number" id="marks-${r.__backendId}" value="${r.marks || 0}" min="0" max="${maxMarks}" class="w-24 px-3 py-2 rounded-lg font-bold text-xl border-2 border-gray-300 focus:border-yellow-400 focus:outline-none" ${r.is_checked ? 'disabled' : ''}>
+                     <span class="text-xl font-bold text-gray-500">/ ${maxMarks}</span>
+                     ${!r.is_checked ? `<button onclick="markAsChecked('${r.__backendId}', ${maxMarks})" class="ml-auto text-black font-bold py-2.5 px-6 rounded-lg shadow-md transition-all hover:bg-green-500 hover:text-white" style="background: #F5C527;">✓ Submit Grade</button>` : ''}
+                   </div>
+                 </div>`;
+           }).join('') + `</div>`;
+           modal.classList.remove('hidden');
+       }
+
+       async function markAsChecked(backendId, maxMarks) {
+           const response = allData.find(d => d.__backendId === backendId);
+           let marks = Math.max(0, Math.min(maxMarks, parseInt(document.getElementById(`marks-${backendId}`).value) || 0));
+           if (response) {
+               await window.dataSdk.update({ ...response, marks: marks, is_checked: true });
+               showToast('Graded!', 'success'); setTimeout(() => openResponseModal(response.student_name), 100);
+           }
+       }
+
+       function closeModal() { document.getElementById('response-modal').classList.add('hidden'); }
+
+       // Student Functions
+       function loadTest() {
+           testQuestions = allData.filter(d => d.type === 'question' && d.test_published);
+           if (allData.filter(d => d.type === 'response' && d.student_name === currentUser).length > 0) {
+               document.getElementById('no-test').classList.add('hidden'); document.getElementById('test-interface').classList.add('hidden'); document.getElementById('test-submitted').classList.remove('hidden'); return;
+           }
+           if (testQuestions.length === 0) {
+               document.getElementById('no-test').classList.remove('hidden'); document.getElementById('test-interface').classList.add('hidden'); document.getElementById('test-submitted').classList.add('hidden');
+           } else {
+               document.getElementById('no-test').classList.add('hidden'); document.getElementById('test-interface').classList.remove('hidden'); document.getElementById('test-submitted').classList.add('hidden'); displayQuestion();
+           }
+       }
+
+       function displayQuestion() {
+           if (testQuestions.length === 0) return;
+           const q = testQuestions[currentQuestionIndex], total = testQuestions.length;
+           document.getElementById('progress-text').textContent = `Question ${currentQuestionIndex + 1} of ${total}`;
+           document.getElementById('progress-bar').style.width = `${((currentQuestionIndex + 1) / total) * 100}%`;
+           document.getElementById('q-type-badge').textContent = q.question_type === 'short' ? 'Short Answer' : 'Long Answer';
+           document.getElementById('q-marks-badge').textContent = q.question_type === 'short' ? '5 Marks' : '10 Marks';
+           document.getElementById('current-question').textContent = q.question_text;
+           const answerField = document.getElementById('student-answer');
+           answerField.value = studentAnswers[q.question_id] || '';
+           speakQuestionWithMetadata(`Question ${currentQuestionIndex + 1} of ${total}. ${q.question_type === 'short' ? 'Short Answer, 5 Marks' : 'Long Answer, 10 Marks'}.`, q.question_text);
+           setTimeout(() => answerField.focus(), 100);
+           document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+           document.getElementById('next-btn').textContent = currentQuestionIndex === total - 1 ? 'Review Last' : 'Next →';
+       }
+
+       function navigateQuestion(direction) {
+           studentAnswers[testQuestions[currentQuestionIndex].question_id] = document.getElementById('student-answer').value;
+           currentQuestionIndex = Math.max(0, Math.min(testQuestions.length - 1, currentQuestionIndex + direction)); displayQuestion();
+       }
+
+       function showPopup(eligible, message) {
+           const popup = document.getElementById('eligibility-popup'), icon = document.getElementById('popup-icon'), title = document.getElementById('popup-title'), msg = document.getElementById('popup-message');
+           if (eligible) {
+               icon.style.background = '#E8F5F0'; icon.querySelector('svg').style.color = '#5FA88E'; title.textContent = '✓ Eligible!'; title.style.color = '#5FA88E';
+           } else {
+               icon.style.background = '#FFF4E6'; icon.querySelector('svg').style.color = '#E8B84D'; icon.querySelector('svg').innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>'; title.textContent = 'Keep Going!'; title.style.color = '#E8B84D';
+           }
+           msg.textContent = message; popup.classList.remove('hidden');
+       }
+
+       function closePopup() { document.getElementById('eligibility-popup').classList.add('hidden'); }
+
+       async function submitTest() {
+           studentAnswers[testQuestions[currentQuestionIndex].question_id] = document.getElementById('student-answer').value;
+           for (const q of testQuestions) {
+               await window.dataSdk.create({ type: 'response', question_id: q.question_id, question_text: '', question_type: '', answer: '', test_published: false, student_answer: studentAnswers[q.question_id] || '', student_name: currentUser, is_checked: false, marks: 0, submitted_at: new Date().toISOString(), created_at: new Date().toISOString() });
+           }
+           document.getElementById('test-interface').classList.add('hidden');
+           document.getElementById('test-submitted').classList.remove('hidden');
+           triggerCinematicReveal('test-submitted');
+           speakText('Test submitted successfully! Your answers have been submitted. Your teacher will review them soon.');
+           showToast('Test submitted securely!', 'success');
+       }
+
+       // Speech & Braille logic
+       let lastSpaceTime = 0, lastEnterTime = 0;
+       const keyToDot = {'7': 1,'4': 2,'1': 3,'8': 4,'5': 5,'2': 6};
+       const brailleMap = {"1":"a","12":"b","14":"c","145":"d","15":"e","124":"f","1245":"g","125":"h","24":"i","245":"j","13":"k","123":"l","134":"m","1345":"n","135":"o","1234":"p","12345":"q","1235":"r","234":"s","2345":"t","136":"u","1236":"v","2456":"w","1346":"x","13456":"y","1356":"z","":" "};
+       let activeDots = new Set(), brailleActive = false, keyPressCount = {};
+
+       function getBrailleLetter(dots) { return brailleMap[Array.from(dots).sort((a, b) => a - b).join("")] || ""; }
+
+       const commonMisspellings = {'gool':'good','teh':'the','recieve':'receive','occured':'occurred','tomarrow':'tomorrow','beacuse':'because'};
+       const grammarPatterns = [
+           { pattern: /\bmy name ([a-z]+)\b/gi, replacement: 'my name is $1' },
+           { pattern: /\bthis (book|pen|car)\b/gi, replacement: 'this is a $1' },
+           { pattern: /\bi\b/g, replacement: 'I' },
+           { pattern: /\b(he|she|it) (go|do|have)\b/gi, replacement: (match, p1, p2) => `${p1} ${p2 === 'go' ? 'goes' : p2 === 'do' ? 'does' : 'has'}` },
+           { pattern: /\bi (goes|does|has)\b/gi, replacement: (match, p1) => `I ${p1 === 'goes' ? 'go' : p1 === 'does' ? 'do' : 'have'}` }
+       ];
+
+       function correctWord(w) { const lw = w.toLowerCase(); return commonMisspellings[lw] || w; }
+       function correctSentence(s) {
+           let c = s.trim(); let cors = [];
+           grammarPatterns.forEach(({ pattern, replacement }) => { const b = c; c = c.replace(pattern, replacement); if (b !== c) cors.push({ type: 'grammar', corrected: true }); });
+           const wds = c.split(/\s+/).map(w => {
+               const cl = w.replace(/[.,!?;:]$/, ''), p = w.match(/[.,!?;:]$/)?.[0] || '', cw = correctWord(cl);
+               if (cw !== cl) cors.push({ type: 'word', original: cl, corrected: cw }); return cw + p;
+           });
+           c = wds.join(' '); c = c.charAt(0).toUpperCase() + c.slice(1);
+           return { corrected: c, corrections: cors };
+       }
+
+       function insertBrailleCharacter(char) {
+           const ta = document.getElementById('student-answer'); if (!ta) return;
+           const s = ta.selectionStart, e = ta.selectionEnd, t = ta.value;
+           if (char === '\n') {
+               const clr = t.substring(0, s).split('\n').pop(), cl = clr.trim();
+               if (autocorrectEnabled && cl.length > 0) {
+                   const { corrected, corrections } = correctSentence(cl);
+                   if (corrections.length > 0) {
+                       const ls = s - clr.length;
+                       ta.value = t.substring(0, ls) + corrected + '.\n' + t.substring(e);
+                       ta.selectionStart = ta.selectionEnd = ls + corrected.length + 2;
+                       setTimeout(() => speakText('Sentence corrected. ' + corrected + '.'), 100); return;
+                   }
+               }
+           } else if (char === '.') {
+               const sm = t.substring(0, s).match(/[^.!?\n]*$/);
+               if (sm) {
+                   const sr = sm[0], sl = sr.trim();
+                   if (autocorrectEnabled && sl.length > 0) {
+                       const { corrected, corrections } = correctSentence(sl);
+                       if (corrections.length > 0) {
+                           const ss = s - sr.length;
+                           ta.value = t.substring(0, ss) + corrected + '.' + t.substring(e);
+                           ta.selectionStart = ta.selectionEnd = ss + corrected.length + 1;
+                           setTimeout(() => speakText('Sentence corrected. ' + corrected + '.'), 100); return;
+                       }
+                   }
+               }
+           } else if (char === ' ') {
+               const wm = t.substring(0, s).match(/\S+$/);
+               if (wm && autocorrectEnabled) {
+                   const lw = wm[0], cw = correctWord(lw);
+                   if (cw !== lw) {
+                       const ws = s - lw.length;
+                       ta.value = t.substring(0, ws) + cw + ' ' + t.substring(e);
+                       ta.selectionStart = ta.selectionEnd = ws + cw.length + 1;
+                       setTimeout(() => speakText('Word corrected. ' + cw + '.'), 100); return;
+                   }
+               }
+           }
+           ta.value = t.substring(0, s) + char + t.substring(e); ta.selectionStart = ta.selectionEnd = s + char.length;
+           speakText(char === '.' ? 'period' : char === '\n' ? 'new line' : char === ' ' ? 'space' : char);
+       }
+
+       let isReadingQuestion = false, questionUtterance = null;
+       function speakText(text, isQ = false) {
+           window.speechSynthesis.cancel();
+           const u = new SpeechSynthesisUtterance(text); u.rate = 0.9;
+           if (isQ) { questionUtterance = u; isReadingQuestion = true; u.onend = () => { isReadingQuestion = false; questionUtterance = null; }; }
+           window.speechSynthesis.speak(u);
+       }
+       function speakQuestionWithMetadata(m, q) { speakText(m + ' ' + q, true); }
+
+       let isReadingAnswer = false;
+       function readAnswerWordByWord() {
+           const ans = document.getElementById('student-answer').value.trim();
+           if (!ans) return speakText('You have not typed any answer yet.');
+           window.speechSynthesis.cancel(); isReadingAnswer = true;
+           const wds = ans.split(/\s+/); let i = 0;
+           const speakNext = () => {
+               if (!isReadingAnswer || i >= wds.length) { isReadingAnswer = false; return; }
+               const u = new SpeechSynthesisUtterance(wds[i]); u.rate = 0.8; u.onend = () => { i++; speakNext(); }; window.speechSynthesis.speak(u);
+           };
+           speakNext();
+       }
+       function readAnswer() { readAnswerWordByWord(); }
+
+       function toggleAutocorrect() {
+           autocorrectEnabled = !autocorrectEnabled;
+           const btn = document.getElementById('autocorrect-btn');
+           if (autocorrectEnabled) { btn.textContent = '✨ Autocorrect: ON'; btn.style.background = '#059669'; speakText('Autocorrect turned on'); } 
+           else { btn.textContent = 'Autocorrect: OFF'; btn.style.background = '#DC2626'; speakText('Autocorrect turned off'); }
+           document.getElementById('student-answer').focus();
+       }
+
+       document.addEventListener('keydown', (e) => {
+           if (currentUser && currentUser !== 'teacher' && !document.getElementById('test-interface').classList.contains('hidden')) {
+               if (document.activeElement.id === 'student-answer' && keyToDot[e.key]) {
+                   e.preventDefault(); if (!keyPressCount[e.key]) keyPressCount[e.key] = 0; keyPressCount[e.key]++; activeDots.add(keyToDot[e.key]); brailleActive = true; return;
+               }
+               if (document.activeElement.id === 'student-answer' && !e.ctrlKey && !e.metaKey && e.key.length === 1 && e.key !== ' ') {
+                   e.preventDefault(); insertBrailleCharacter(e.key); return;
+               }
+               if (e.key === 'Enter' && document.activeElement.id === 'student-answer') {
+                   if (brailleActive) {
+                       e.preventDefault();
+                       const pk = Object.keys(keyPressCount).filter(k => keyPressCount[k] > 0);
+                       if (pk.length === 1) {
+                           const k = pk[0], c = keyPressCount[k], v = keyToDot[k];
+                           if (c === 2) insertBrailleCharacter(v.toString());
+                           else if (c === 3) insertBrailleCharacter(v === 1 ? '7' : v === 2 ? '8' : '9');
+                           else if (c === 4) insertBrailleCharacter('0');
+                           else if (c === 1) { const l = getBrailleLetter(activeDots); if (l) insertBrailleCharacter(l); }
+                       } else { const l = getBrailleLetter(activeDots); if (l) insertBrailleCharacter(l); }
+                       activeDots.clear(); brailleActive = false; keyPressCount = {}; return;
+                   } else if (!e.shiftKey) {
+                       const ct = Date.now();
+                       if (ct - lastEnterTime < 500) { e.preventDefault(); submitTest(); lastEnterTime = 0; }
+                       else { lastEnterTime = ct; e.preventDefault(); insertBrailleCharacter('\n'); }
+                       return;
+                   }
+               }
+               if (e.key === ' ') {
+                   if (isReadingQuestion) { e.preventDefault(); window.speechSynthesis.cancel(); isReadingQuestion = false; return; }
+                   if (document.activeElement.id === 'student-answer' && !brailleActive) {
+                       e.preventDefault(); const ct = Date.now();
+                       if (ct - lastSpaceTime < 300) { insertBrailleCharacter('\n'); lastSpaceTime = 0; }
+                       else { insertBrailleCharacter(' '); lastSpaceTime = ct; }
+                       return;
+                   }
+               }
+               if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); if (currentQuestionIndex > 0) navigateQuestion(-1); }
+               else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); if (currentQuestionIndex < testQuestions.length - 1) navigateQuestion(1); }
+           }
+       });
+
+       // 100 Green Energy Library
+       const greenEnergyLibrary = [
+           { q: "What is the basic principle of most electrical power generation?", a: "Electromagnetic induction." },
+           { q: "Who discovered the principle of electromagnetic induction?", a: "Michael Faraday." },
+           { q: "What device is used to generate electrical energy using electromagnetic induction?", a: "An electric generator." },
+           { q: "What is the function of a turbine in a power plant?", a: "To rotate the magnet inside the generator to produce electricity." },
+           { q: "What drives the turbine in a thermal power plant?", a: "High-temperature and high-pressure steam." },
+           { q: "Which fuel is primarily used in thermal power plants?", a: "Coal." },
+           { q: "What type of energy is stored in coal?", a: "Chemical energy." },
+           { q: "What is the sequence of energy transformation in a thermal power plant?", a: "Chemical energy -> Thermal energy -> Kinetic energy in steam -> Kinetic energy in turbine -> Electrical energy." },
+           { q: "Name a major environmental issue caused by burning coal.", a: "Air pollution due to the release of carbon dioxide and toxic gases." },
+           { q: "What toxic gases are released during the burning of coal?", a: "Sulphur dioxide and nitrogen oxide." },
+           { q: "What health issues can be caused by the soot particles released from thermal power plants?", a: "Severe respiratory problems like asthma." },
+           { q: "Is coal a renewable or non-renewable source of energy?", a: "Non-renewable source of energy." },
+           { q: "Which elements are commonly used as fuel in nuclear power plants?", a: "Uranium-235 or Plutonium-239." },
+           { q: "What process is used to release energy from Uranium-235?", a: "Nuclear fission." },
+           { q: "What particle is used to bombard a Uranium-235 nucleus to trigger fission?", a: "A neutron." },
+           { q: "How many neutrons are typically released during the fission of one Uranium-235 nucleus?", a: "Three neutrons." },
+           { q: "What is a controlled chain reaction?", a: "A process where the rate of nuclear fission is regulated to safely produce steady thermal energy." },
+           { q: "What is the sequence of energy transformation in a nuclear power plant?", a: "Nuclear energy -> Thermal energy -> Kinetic energy in steam -> Kinetic energy in turbine -> Electrical energy." },
+           { q: "What is a major advantage of nuclear power plants over thermal power plants?", a: "They do not produce greenhouse gases like carbon dioxide." },
+           { q: "What is the main hazard associated with nuclear power plants?", a: "The safe disposal of dangerous radioactive waste and the risk of nuclear accidents." },
+           { q: "What is nuclear waste?", a: "The highly radioactive remnants of nuclear fuel after it has been used in a reactor." },
+           { q: "What is the main fuel used in a natural gas power plant?", a: "Natural gas." },
+           { q: "How does a natural gas power plant drive its turbine?", a: "Using the high pressure and high temperature gas generated by burning the fuel." },
+           { q: "Why is electricity generation from natural gas considered more eco-friendly than coal?", a: "Because natural gas does not contain sulphur, resulting in less air pollution." },
+           { q: "What is the sequence of energy transformation in a natural gas power plant?", a: "Chemical energy -> Kinetic energy generated due to combustion -> Kinetic energy in turbine -> Electrical energy." },
+           { q: "Which emits more CO2 per unit of energy: coal or natural gas?", a: "Coal emits significantly more CO2 than natural gas." },
+           { q: "What exactly defines 'Green Energy'?", a: "Energy generated without causing environmental pollution and from inexhaustible, renewable sources." },
+           { q: "Why are fossil fuels not considered green energy?", a: "They cause air pollution, contribute to global warming, and have limited reserves." },
+           { q: "Give three examples of green energy sources.", a: "Solar energy, wind energy, and hydroelectric energy." },
+           { q: "What is meant by an 'inexhaustible' energy source?", a: "An energy source that will never run out, like the sun or wind." },
+           { q: "What type of energy is stored in the water of a dam?", a: "Potential energy." },
+           { q: "How is electricity generated in a hydroelectric power plant?", a: "Fast-flowing water from a dam rotates a turbine, which drives a generator." },
+           { q: "What is the energy transformation in a hydroelectric power plant?", a: "Potential energy in water -> Kinetic energy in flowing water -> Kinetic energy in turbine -> Electrical energy." },
+           { q: "Does a hydroelectric power plant cause air pollution?", a: "No, because no fuel is burned in the process." },
+           { q: "What is one environmental problem associated with building large dams?", a: "The submerging of forests and human settlements, leading to displacement and habitat loss." },
+           { q: "What happens to the kinetic energy of water after it passes through a hydro-turbine?", a: "Most of it is transferred to the turbine, and the water flows downstream with reduced energy." },
+           { q: "Why is hydroelectric energy considered a conventional renewable source?", a: "Because the water reservoir is continuously replenished by the natural water cycle." },
+           { q: "Name a famous hydroelectric project in Maharashtra.", a: "Koyna Dam." },
+           { q: "How does a dam affect aquatic life?", a: "It can obstruct the natural flow of the river, harming aquatic ecosystems." },
+           { q: "What dictates the capacity of a hydroelectric power plant?", a: "The volume of water stored in the dam and the height from which it falls." },
+           { q: "What type of energy is present in the wind?", a: "Kinetic energy." },
+           { q: "What machine is used to convert wind energy into electricity?", a: "A wind turbine." },
+           { q: "How does a wind turbine work?", a: "The wind strikes the blades, causing them to rotate, which turns the generator to produce electricity." },
+           { q: "What determines the power output of a wind turbine?", a: "The sweep area of the blades and the speed of the wind." },
+           { q: "What is a prerequisite for installing wind turbines in a specific location?", a: "The location must consistently have high wind speeds." },
+           { q: "Is wind energy available 24/7 in all locations?", a: "No, wind energy is intermittent and depends highly on geographical conditions." },
+           { q: "What is a 'wind farm'?", a: "A large group of wind turbines operating together in one location to generate massive amounts of electricity." },
+           { q: "What is the energy transformation in a wind turbine?", a: "Kinetic energy in wind -> Kinetic energy in turbine -> Electrical energy." },
+           { q: "Can wind turbines be installed offshore (in the ocean)?", a: "Yes, offshore wind farms often experience stronger and more consistent winds." },
+           { q: "What is a minor disadvantage of wind farms?", a: "They require large areas of land and can be noisy or affect local bird populations." },
+           { q: "What is a solar photovoltaic cell?", a: "A device that converts solar radiation energy directly into electrical energy." },
+           { q: "What scientific effect allows solar cells to generate electricity?", a: "The photovoltaic effect." },
+           { q: "What type of current is generated by a solar cell?", a: "Direct Current (DC)." },
+           { q: "Which semiconductor element is predominantly used to make solar cells?", a: "Silicon." },
+           { q: "What is the typical potential difference across a single standard silicon solar cell?", a: "Approximately 0.5 Volts." },
+           { q: "If solar cells are connected in series, what happens to the potential difference?", a: "The potential difference adds up (increases)." },
+           { q: "If solar cells are connected in parallel, what happens to the generated current?", a: "The generated current adds up (increases)." },
+           { q: "What is a solar panel?", a: "A collection of multiple solar cells connected in a specific pattern to produce useful voltage and current." },
+           { q: "What is a solar string?", a: "Several solar panels connected in series." },
+           { q: "What is a solar array?", a: "Multiple solar strings connected in parallel to maximize power output." },
+           { q: "Why do we need an inverter in a solar power system?", a: "To convert the Direct Current (DC) produced by panels into Alternating Current (AC) used by home appliances." },
+           { q: "What is a major advantage of solar photovoltaic energy?", a: "It has absolutely no moving parts, requires little maintenance, and causes zero pollution." },
+           { q: "What is the main limitation of solar energy?", a: "It is only available during the daytime when the sun is shining." },
+           { q: "How can solar energy be used at night?", a: "By storing the generated electricity in large batteries during the day." },
+           { q: "Is the efficiency of energy conversion in solar cells 100%?", a: "No, a significant amount of solar radiation is lost as heat." },
+           { q: "How is a solar thermal power plant different from a solar photovoltaic plant?", a: "It uses the sun's heat to boil water into steam to drive a turbine, rather than converting light directly to electricity." },
+           { q: "What device is used to concentrate sunlight in a solar thermal plant?", a: "Large reflecting mirrors or parabolic troughs." },
+           { q: "What absorbs the concentrated sunlight in a solar thermal plant?", a: "An absorber tube containing a fluid, usually water or a special thermal oil." },
+           { q: "What is the sequence of energy transformation in a solar thermal plant?", a: "Thermal energy in solar radiation -> Thermal energy in fluid -> Kinetic energy in steam -> Kinetic energy in turbine -> Electrical energy." },
+           { q: "Can solar thermal plants generate electricity at night?", a: "Sometimes, if the plant stores molten salt heated during the day to generate steam at night." },
+           { q: "What is biomass energy?", a: "Energy derived from organic matter such as plant material, agricultural waste, and animal dung." },
+           { q: "What gas is primarily produced in a biogas plant?", a: "Methane (CH4)." },
+           { q: "Is biomass considered a renewable energy source?", a: "Yes, because plants and crops can be continuously grown." },
+           { q: "How can biomass be used to generate electricity?", a: "By burning agricultural waste or biogas to heat water into steam, driving a turbine." },
+           { q: "What is liquid biofuel?", a: "A liquid fuel, like bioethanol or biodiesel, produced from plant materials like sugarcane or vegetable oils." },
+           { q: "What is geothermal energy?", a: "Electrical energy generated using the natural heat stored beneath the Earth's surface." },
+           { q: "How is geothermal energy harnessed?", a: "Water is pumped deep underground where Earth's heat turns it to steam, which rises to drive a turbine." },
+           { q: "What is tidal energy?", a: "Energy generated by harnessing the movement of ocean water during high and low tides." },
+           { q: "How does a tidal power plant work?", a: "A barrage is built across a bay; water flowing in and out due to tides turns a turbine." },
+           { q: "What is wave energy?", a: "Energy generated by capturing the kinetic energy of continuous ocean surface waves." },
+           { q: "What is the 'greenhouse effect'?", a: "The trapping of the sun's warmth in the atmosphere by gases like CO2, leading to global warming." },
+           { q: "Why are fossil fuels referred to as 'carbon-heavy'?", a: "Because they contain a high percentage of carbon, releasing CO2 upon combustion." },
+           { q: "Which fuel is considered the cleanest burning fossil fuel?", a: "Natural gas." },
+           { q: "What is 'acid rain'?", a: "Rainway mixed with sulphur dioxide and nitrogen oxides emitted from thermal power plants." },
+           { q: "What is energy conservation?", a: "The practice of reducing energy consumption by using energy more efficiently." },
+           { q: "Why is research shifting heavily towards green energy?", a: "To mitigate climate change and prepare for the exhaustion of fossil fuel reserves." },
+           { q: "What role do transformers play in power distribution?", a: "They step-up or step-down voltage for efficient long-distance transmission." },
+           { q: "What is a 'smart grid'?", a: "An electrical grid that uses digital technology to monitor and manage the transport of electricity from all generation sources." },
+           { q: "What is the unit of electrical power?", a: "Watt (W) or Megawatt (MW)." },
+           { q: "How many watts are in a megawatt?", a: "One million (1,000,000) watts." },
+           { q: "What is the typical lifespan of a commercial solar panel?", a: "About 25 to 30 years." },
+           { q: "What happens to a wind turbine when wind speeds are dangerously high?", a: "It has a braking system that stops the blades to prevent mechanical damage." },
+           { q: "What is 'off-grid' solar power?", a: "A solar system that relies completely on batteries and is not connected to the main municipal electricity grid." },
+           { q: "Why is water considered a renewable resource in the context of hydro-power?", a: "Because the sun naturally evaporates ocean water, which falls as rain to refill the dam." },
+           { q: "Are the components of solar panels recyclable?", a: "Yes, mostly, but the recycling process is currently complex and expensive." },
+           { q: "What is a hybrid power plant?", a: "A plant that combines two or more energy sources, like solar and wind, to provide more reliable power." },
+           { q: "What is 'energy efficiency'?", a: "Performing the same task or producing the same result using less energy." },
+           { q: "What is carbon footprint?", a: "The total amount of greenhouse gases produced directly and indirectly by human activities." },
+           { q: "Does the manufacturing of solar panels create a carbon footprint?", a: "Yes, manufacturing requires energy, but the panels offset this by producing clean energy over their lifespan." },
+           { q: "What is the ultimate source of almost all energy on Earth?", a: "The Sun." },
+           { q: "What particles of light carry energy from the sun to solar panels?", a: "Photons." },
+           { q: "What happens when a photon hits a solar cell?", a: "It knocks an electron loose, creating an electrical current." },
+           { q: "What is a solar tracking system?", a: "A mechanical system that tilts solar panels to directly face the sun throughout the day." },
+           { q: "What is the difference between monocrystalline and polycrystalline solar panels?", a: "Monocrystalline panels are made from a single silicon crystal and are highly efficient, while polycrystalline are made from melted silicon fragments." },
+           { q: "What is solar insolation?", a: "The amount of solar radiation reaching a given area over a specific time." },
+           { q: "Why are solar panels often placed on rooftops?", a: "To maximize exposure to sunlight and utilize otherwise unused space." },
+           { q: "What is a net meter in a grid-connected solar system?", a: "A device that measures the electricity you draw from the grid and the excess solar electricity you push back into the grid." },
+           { q: "Can solar energy be used for cooking?", a: "Yes, using solar cookers that concentrate sunlight to heat food." },
+           { q: "What is the main environmental benefit of solar energy?", a: "It produces no air or water pollution and zero greenhouse gases during operation." },
+           { q: "What is solar water heating?", a: "Using the sun's thermal energy to heat water directly for domestic or industrial use." },
+           { q: "What is the minimum wind speed required to generate electricity in a typical wind turbine?", a: "Usually around 12 to 14 km/h (cut-in speed)." }
+       ];
+
+       async function autoAddFiveQuestions() {
+           const shuffled = [...greenEnergyLibrary].sort(() => 0.5 - Math.random());
+           const selectedQuestions = shuffled.slice(0, 5);
+           for (const item of selectedQuestions) {
+               await window.dataSdk.create({
+                   type: 'question', question_id: 'q_' + Date.now() + Math.random().toString(36).substr(2, 5),
+                   question_text: item.q, question_type: 'short', answer: item.a, test_published: false,
+                   student_answer: null, student_name: null, is_checked: false, marks: null, submitted_at: null, created_at: new Date().toISOString()
+               });
+           }
+           showToast('Generated 5 random Green Energy questions!', 'success');
+           renderQuestions();
+       }
+
+       function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+       function showToast(message, type) {
+           const toast = document.createElement('div');
+           toast.className = `fixed top-6 right-6 px-5 py-3 rounded-md card-shadow font-semibold text-white z-50 animate-fade-in`;
+           toast.style.background = type === 'success' ? '#059669' : '#DC2626';
+           toast.textContent = message; document.body.appendChild(toast);
+           setTimeout(() => toast.remove(), 3000);
+       }
+       applyConfig();
+   </script>
+</body>
+</html>
